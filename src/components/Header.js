@@ -3,10 +3,9 @@ import Navbar from "react-bootstrap/Navbar";
 import { Button, FormControl, Form, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-// 노마드에서 다른 js 파일에서 export 어떻게 하는지 찾아보고 다음 코드 적용할 것
 export default function Header() {
   return (
-    <Navbar fixed="top" bg="dark" variant="dark">
+    <Navbar sticky="top" bg="dark" variant="dark">
       <Navbar.Brand href="/">Stock Tracker</Navbar.Brand>
       <Nav className="mr-auto">
         <Nav.Link href="/stocks">Stocks</Nav.Link>

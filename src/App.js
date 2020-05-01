@@ -1,21 +1,38 @@
 import React, { useState } from "react";
 import "./App.css";
-import Header from "./Header.js";
-import bg_home from "./images/bg_home.jpg";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-let sectionStyle = {
-  width: "100%",
-  height: "800px",
-  backgroundImage: `url(${bg_home})`,
-};
+// Components
+import Header from "./components/Header.js";
 
-function App() {
+// Pages
+import Home from "./pages/Home.js";
+import Stocks from "./pages/Stocks.js";
+import Quote from "./pages/Quote.js";
+import PriceHistory from "./pages/Price-history.js";
+
+// Others
+
+export default function App() {
   return (
     <div className="App">
-      <Header />
-      <div className="test" style={sectionStyle}></div>
+      <Router>
+        <Header />
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route exact path="/stocks">
+            <Stocks />
+          </Route>
+          <Route exact path="/quote">
+            <Quote />
+          </Route>
+          <Route exact path="/price-history">
+            <PriceHistory />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
-
-export default App;
