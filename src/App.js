@@ -10,6 +10,7 @@ import Home from "./pages/Home.js";
 import Stocks from "./pages/Stocks.js";
 import Quote from "./pages/Quote.js";
 import PriceHistory from "./pages/Price-history.js";
+import Login from "./pages/Login.js";
 
 // Others
 
@@ -30,6 +31,9 @@ export default function App() {
           </Route>
           <Route exact path="/price-history">
             <PriceHistory />
+          </Route>
+          <Route exact path="/login">
+            <Login />
           </Route>
         </Switch>
       </Router>

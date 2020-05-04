@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "react-bootstrap/Navbar";
-import { Button, FormControl, Form, Nav } from "react-bootstrap";
+import { Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function Header() {
@@ -13,8 +13,8 @@ export default function Header() {
         <Nav.Link href="/price-history">Price History</Nav.Link>
       </Nav>
       <Nav className="">
-        <Nav.Link href="/stocks">Login</Nav.Link>
-        <Nav.Link href="/quote">Register</Nav.Link>
+        <Nav.Link href="/login">Login</Nav.Link>
+        <Nav.Link href="/login">Register</Nav.Link>
       </Nav>
     </Navbar>
   );

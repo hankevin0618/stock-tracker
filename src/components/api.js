@@ -1,34 +1,86 @@
 import React, { useState, useEffect } from "react";
+import { Button, Badge, Input } from "reactstrap";
+
+// AG Grid
+import { AgGridReact } from "ag-grid-react";
+import "ag-grid-community/dist/styles/ag-grid.css";
+import "ag-grid-community/dist/styles/ag-theme-balham.css";
 
 const API_URL = "http://131.181.190.87:3000";
+const url = `${API_URL}/stocks/symbols`;
 
-function getStocks() {
-  const url = `${API_URL}/stocks/symbols`;
+function SearchBar(props) {
+  const [innerSearch, setInnerSearch] = useState("");
+  return (
+    <div className="d-flex align-items-center">
+      <Input
+        type="search"
+        name="search"
+        id="search"
+        aria-labelledby="search-button"
+        value={innerSearch}
+        onChange={(e) => {
+          setInnerSearch(e.target.value);
+        }}
+      />
 
-  return fetch(url)
-    .then((res) => res.json())
-    .then((data) =>
-      data.map((info) => ({
-        name: info.name,
-        industry: info.industry,
-        symbol: info.symbol,
-      }))
-    );
-
-  // .then((test) => console.log(test.name));
+      <Button id="search-button" type="button">
+        Search
+      </Button>
+    </div>
+  );
 }
-export function useStocks() {
-  //   const [loading, setLoading] = useState(true);
-  const [stocks, setStocks] = useState([]);
-  //   const [error, setError] = useState(null);
+
+export default function useStocks() {
+  const [rowData, setRowData] = useState([]);
+
+  const columns = [
+    { headerName: "Name", field: "name", sortable: true, filter: true },
+    { headerName: "Industry", field: "industry", sortable: true },
+    { headerName: "Symbol", field: "symbol", sortable: true },
+  ];
 
   useEffect(() => {
-    getStocks().then((data) =>
-      data.map((info) => {
-        stocks.push(info);
-      })
-    );
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) =>
+        data.map((info) => {
+          return {
+            name: info.name,
+            industry: info.industry,
+            symbol: info.symbol,
+          };
+        })
+      )
+      .then((info) => setRowData(info));
   });
 
-  return { stocks }; // 애네를 newsheadlines가 아니라 stocktracker에 맞게 바꿔줘야함
+  return (
+    <div className="containcer">
+      <div
+        className="widgets"
+        style={{ display: "inline-flex", margin: "10px" }}
+      >
+        <p className="mr-3">
+          <Badge color="success">{rowData.length}</Badge> Stocks are found
+        </p>
+        <SearchBar />
+      </div>
+      <div
+        className="ag-theme-balham"
+        style={{
+          height: "600px",
+          width: "800px",
+          margin: "auto",
+        }}
+      >
+        <AgGridReact
+          columnDefs={columns}
+          rowData={rowData}
+          pagination={true}
+          paginationPageSize={15}
+        />
+      </div>
+    </div>
+  );
 }
